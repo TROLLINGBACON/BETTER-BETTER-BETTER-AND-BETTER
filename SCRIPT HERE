@@ -1,0 +1,133 @@
+import tkinter as tk
+from tkinter import messagebox
+import random
+
+# List of player usernames for selection
+PLAYER_USERNAMES = ["Player1", "Player2", "Player3"]
+
+# Function definitions
+def add_user():
+    messagebox.showinfo("Info", "User added successfully.")
+
+def delete_user():
+    messagebox.showwarning("Warning", "User deleted successfully.")
+
+def update_user():
+    messagebox.showinfo("Info", "User updated successfully.")
+
+def view_logs():
+    messagebox.showinfo("Logs", "Viewing detailed logs...")
+
+def fake_error():
+    messagebox.showerror("Error", "A wild error appeared!")
+
+def change_color():
+    colors = ["#BF616A", "#A3BE8C", "#EBCB8B", "#81A1C1", "#B48EAD"]
+    root.config(bg=random.choice(colors))
+
+def flight():
+    player = selected_player.get()
+    messagebox.showinfo("Flight", f"{player} can now fly!")
+
+def kick():
+    player = selected_player.get()
+    messagebox.showwarning("Kick", f"{player} has been kicked from the server!")
+
+def view():
+    player = selected_player.get()
+    messagebox.showinfo("View", f"Viewing {player}'s profile...")
+
+def unflight():
+    player = selected_player.get()
+    messagebox.showinfo("Unflight", f"{player} can no longer fly.")
+
+def gun():
+    player = selected_player.get()
+    messagebox.showinfo("Gun", f"{player} now has a gun!")
+
+def kill():
+    player = selected_player.get()
+    messagebox.showerror("Kill", f"{player} has been killed!")
+
+# Functions to make the window draggable
+def start_move(event):
+    root.x = event.x
+    root.y = event.y
+
+def do_move(event):
+    delta_x = event.x - root.x
+    delta_y = event.y - root.y
+    new_x = root.winfo_x() + delta_x
+    new_y = root.winfo_y() + delta_y
+    root.geometry(f"+{new_x}+{new_y}")
+
+# Initialize main window
+root = tk.Tk()
+root.title("Admin Panel")
+root.geometry("600x600")
+root.configure(bg="#2E3440")
+
+# Bind the mouse events to make the window draggable
+root.bind("<Button-1>", start_move)
+root.bind("<B1-Motion>", do_move)
+
+# Frame for better layout
+frame = tk.Frame(root, bg="#2E3440")
+frame.pack(expand=True)
+
+# GUI Elements
+title_label = tk.Label(frame, text="Admin Panel", font=("Arial", 24), bg="#2E3440", fg="#ECEFF4")
+title_label.grid(row=0, column=0, columnspan=2, pady=20)
+
+# Player selection dropdown
+tk.Label(frame, text="Select Player:", bg="#2E3440", fg="#ECEFF4").grid(row=1, column=0, pady=10)
+selected_player = tk.StringVar(frame)
+selected_player.set(PLAYER_USERNAMES[0])  # default value
+player_menu = tk.OptionMenu(frame, selected_player, *PLAYER_USERNAMES)
+player_menu.grid(row=1, column=1, pady=10)
+
+# Admin actions
+add_user_button = tk.Button(frame, text="Add User", command=add_user, width=20)
+add_user_button.grid(row=2, column=0, padx=10, pady=10)
+
+delete_user_button = tk.Button(frame, text="Delete User", command=delete_user, width=20)
+delete_user_button.grid(row=2, column=1, padx=10, pady=10)
+
+update_user_button = tk.Button(frame, text="Update User", command=update_user, width=20)
+update_user_button.grid(row=3, column=0, padx=10, pady=10)
+
+view_logs_button = tk.Button(frame, text="View Logs", command=view_logs, width=20)
+view_logs_button.grid(row=3, column=1, padx=10, pady=10)
+
+# Playful actions
+error_button = tk.Button(frame, text="Fake Error", command=fake_error, width=20)
+error_button.grid(row=4, column=0, padx=10, pady=10)
+
+color_button = tk.Button(frame, text="Random Color Change", command=change_color, width=20)
+color_button.grid(row=4, column=1, padx=10, pady=10)
+
+# Additional commands
+flight_button = tk.Button(frame, text="Flight", command=flight, width=20)
+flight_button.grid(row=5, column=0, padx=10, pady=10)
+
+kick_button = tk.Button(frame, text="Kick", command=kick, width=20)
+kick_button.grid(row=5, column=1, padx=10, pady=10)
+
+view_button = tk.Button(frame, text="View", command=view, width=20)
+view_button.grid(row=6, column=0, padx=10, pady=10)
+
+unflight_button = tk.Button(frame, text="Unflight", command=unflight, width=20)
+unflight_button.grid(row=6, column=1, padx=10, pady=10)
+
+gun_button = tk.Button(frame, text="Gun", command=gun, width=20)
+gun_button.grid(row=7, column=0, padx=10, pady=10)
+
+kill_button = tk.Button(frame, text="Kill", command=kill, width=20)
+kill_button.grid(row=7, column=1, padx=10, pady=10)
+
+# Quit button
+quit_button = tk.Button(frame, text="Quit", command=root.quit, width=20)
+quit_button.grid(row=8, column=0, columnspan=2, pady=20)
+
+# Start the main loop
+root.mainloop()
